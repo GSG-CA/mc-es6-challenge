@@ -1,63 +1,120 @@
-# Morning challenge: Convert ES6 code to ES5
+## ES6
 
-## Setup
+### ESwhat??
 
-1. Clone this repository to your computer.
+ES5 is a name for the version of JavaScript that we all know and love. It's
+[supported very well](http://kangax.github.io/compat-table/es5/) in reasonably modern browsers, and is probably what you've been using
+up to now.
 
-2. Run `node assertEquals.js` from the repository directory to run the tests in Node.
+ECMAScript 2015 commonly known as ES6 or ES2015 released on June 2015. ES5 was released on December 2009. It would then take almost six years for the next version of ECMAScript to be released. So, there are many exciting feature in ES6.
 
-## Description (based on a true story)
+#### Most Top Feature in ES6
+- [block-scoped variables](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/let)
 
-As part of a job application, an employer has asked you to write an `assertEquals` function. You're desperate to impress them, so you use as many ES6 features as you can – arrow functions, spread operators, classes, to name a few.
+  `let` is a new `var` which allows to scope the variable to the blocks. So, the main difference between `let` and `var` is, `var` is scoped to the nearest function block and `let` is scoped to the nearest enclosing block, which can be smaller than a function block.
+  In ES6,
+  ```js
+    let greeting = "say Hi";
+    if (true) {
+        let greeting = "say Hello instead";
+        console.log(greeting);  // "say Hello instead"
+    }
+    console.log(greeting); // "say Hi"
+  ``` 
+  In ES5,
+  ```js
+    var greeting = "say Hi";
+    if (true) {
+        var greeting = "say Hello instead";
+        console.log(greeting);  // "say Hello instead"
+    }
+    console.log(greeting); // "say Hello instead"
+  ``` 
+  When it comes to `const`, it’s just an immutable and it’s also block-scoped like `let`.
 
-Just before submitting your test, you double check the brief and realise that your code needs to run in Internet Explorer – which doesn't support ES6! With an hour to go until your deadline, you need to replace as many of the ES6 features as possible with their ES5 equivalents.
+- [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+  ```js
+  // Traditional Function
+  function bob (a){
+    return a + 100;
+  }
 
-### Morals of the story
+  // Arrow Function
+  let bob = a => a + 100;
+  ```
+- [template literals](http://es6-features.org/#StringInterpolation)
 
-Never assume that your code will run in an environment that supports ES6 syntax. And always read the brief properly.
+  `Template literals` (or interpolation as they’re known in other languages) are a way to output variables in the string mixed with some text.
+  ```js
+    var name = 'Your name is ' + first + ' ' + last + '.';
+    let name = `Your name is ${first} ${last}.`
+  ```
+- [default parameter values](http://es6-features.org/#DefaultParameterValues):
+  Functions can have default parameters
+  ```js
+    function greet(message = "HI THERE"){ 
+      return message
+    }
+    greet() // HI THERE
+    greet("Good Morning") // Good Morning
+  ```
+- [object destructuring](http://es6-features.org/#ParameterContextMatching)
 
-## Learning outcomes
+  Consider the next code:
+  ```js
+    function addUser(args){
+      const name = args.name;
+      const age = args.age;
+      const email = args.email;
+    }
+  ```
+  With destructuring assignment syntax, it can be written like this:
+  ```js
+    function addUser(args){
+      const { name, age, email } = args;
+    }
+  ```
 
-- Recognising some common ES6 features and understanding how they relate to familiar ES5 features.
-- Making non-breaking changes in an unfamiliar codebase without getting lost in the overall structure.
+  or even better, with the destructuring syntax in the parameter list:
+  ```js
+    function addUser({ name, age, email }){}
+  ```
+  Below is the function call:
 
-## Instructions
+  ```js
+    addUser({ name, age, email });
+  ```
+- **Promises in ES6 (will cover later)**
+- **Classes in ES6 (will cover later)**
+- **Modules in ES6**
 
-Don't worry – you don't need to know any ES6 already. Everything required is referenced with comments in the code.
+  Before modules, a variable declared outside any function was a global variable.
+  With modules, a variable can be exported and imported despite the scripts order.
 
-Before you change anything, run the code in Node to see the output. None of the changes you make should affect the output. If you're curious, you might also want to try running the code in a browser that doesn't support ES6 features (try Internet Explorer) to see what happens.
+  Exporting makes a function or object available to other modules. 
+  ```js
+    //module "./TodoStore.js"
+    export default function TodoStore(){}
 
-You probably won't have time to change all of the ES6 syntax in an hour, so don't feel that you're under pressure to finish everything – this isn't a real job application! Instead, pick a few features that you're interested in, read some documentation, try to replace them with ES5, then run the file again in Node to check that the output hasn't changed. (Node will happily run code that contains a mixture of ES5 and ES6 syntax, so you don't have to replace every single ES6 feature before you can test your changes.)
+    //module "./UserStore.js"
+    export default function UserStore(){}
+  ```
+  Importing makes a function or object, from other modules, available to the current module.
 
-The first time each ES6 feature appears in the code, you'll find a comment on the previous line telling you what features to look for, which you can look up in the list below to find a quick fix. It's up to you to identify any subsequent times that the feature gets used – but if you're running short on time, focus on replacing a variety of different ES6 features, rather than replacing the same feature in several places.
+  ```js
+    import TodoStore from "./TodoStore";
+    import UserStore from "./UserStore";
 
-The code makes use of several ES6 features. If you're not feeling hugely comfortable with ES6, then focus on understanding and replacing some of the features near the top of the following list – don't worry about the bottom half of the list, as this isn't a race. If you already feel comfortable with ES6, feel free to skip ahead to some of the features at the end of the list – the two at the bottom are particularly challenging.
+    const todoStore = TodoStore();
+    const userStore = UserStore();
+  ```  
 
-The features (ordered by how difficult it will be to replace them with ES5, from easiest to hardest) are:
+### The Challenge
+We're going to have some code we want to convert between ES6 and ES5.
+Bear in mind there are some differences in functionality between ES6 and ES5, which this challenge should help you to understand. You may want to focus on understanding some of the main differences rather than rushing to the end as this will help you to start using ES6 in your own projects.
 
-- [block-scoped variables](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/let): Declared with `let`. Similar to `var`s, but scoped to a single block (essentially the set of curly brackets it's declared in). **Quick fix**: Replace with a `var` and test that your code hasn't broken.
+Clone the repository to your computer and follow the instructions.
+- [Part1](./ES5-ES6/README.md) : Convert ES5 features to ES6.
+- [Part2](./ES6-ES5/README.md): Convert ES6 features to ES5.
 
-- [constants](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/const):  Declared with `const`. Similar to a `let`, but the reference can't be changed after it's been declared. **Quick fix**: Replace with a `var` and test that your code hasn't broken.
-
-- [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions): Similar to an ES5 function, but uses a 'fat arrow' (`=>`) between the parameters and the function body. **Quick fix**: Replace with a `function` and test that your code hasn't broken.
-
-- [template literals](http://es6-features.org/#StringInterpolation): Similar to a string, but uses backticks (`` ` ``) instead of quotes (`'`) and allows you to insert expressions into the string using the syntax `${expression}`. **Quick fix**: Concatenate multiple strings and expressions together instead using the `+` symbol.
-
-- [default parameter values](http://es6-features.org/#DefaultParameterValues): Allows you to assign a default value to a parameter in a function if no argument is given. **Quick fix**: Check if the parameter ```=== undefined``` in the function body and assign a default value within the if statement.
-
-- [the spread operator](http://es6-features.org/#SpreadOperator): Separates an array out into its elements so they can be added to a new array or used as parameters in a function. **Quick fix**: (when creating a new array) use `array1.concat(array2)` to add all items from the second array to the first.
-
-- [object destructuring](http://es6-features.org/#ParameterContextMatching): Assigns multiple keys from an object to separate variables or parameters at the same time. **Quick fix**: Manually assign each key to a new variable.
-
-- [the Set data structure](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set): A new type of object – similar to an `Array`, but each unique element can only appear once. Created using `new Set(iterable)`. **Quick fix**: (when used to create a unique set from an array with repeating elements) create a new array with repeating elements filtered out. Google will help.
-
-- [class definitions](http://es6-features.org/#ClassDefinition): Allows you to define classes using `class`, for class-based object oriented programming. **Quick fix**: Replace class with a traditional constructor function and prototype methods.
-
-
-## Bonus
-
-If you managed to replace all of the features, congratulations! You should now be able to run the code in any web browser and see the same results that you'd get in Node. Give yourself a pat on the back for your services to accessibility.
-
-Did you replace the `const`s and `let`s with `var`s? Can you think of any situations where that wouldn't work? What could you do differently to mimic that functionality? How about arrow functions and sets?
-
-If you have time remaining, read up on a piece of software called [Babel](https://babeljs.io/) – you'll be hearing a lot more about it in future.
+A completed solution is saved in the solutions directory of the repository, but try to work it out yourself first – it's not a race, and you shouldn't worry if you don't manage to complete everything.
