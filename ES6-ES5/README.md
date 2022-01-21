@@ -4,7 +4,7 @@
 
 1. Clone this repository to your computer.
 
-2. Run `node assertEquals.js` from the repository directory to run the tests in Node.
+2. Run `node ES6-ES5/assertEquals.js` from the repository directory to run the tests in Node.
 
 ## Description (based on a true story)
 
