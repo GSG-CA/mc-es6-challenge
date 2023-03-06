@@ -114,7 +114,7 @@ We're going to have some code we want to convert between ES6 and ES5.
 Bear in mind there are some differences in functionality between ES6 and ES5, which this challenge should help you to understand. You may want to focus on understanding some of the main differences rather than rushing to the end as this will help you to start using ES6 in your own projects.
 
 Clone the repository to your computer and follow the instructions.
-- [Part1](./ES5-ES6/README.md) : Convert ES5 features to ES6.
-- [Part2](./ES6-ES5/README.md): Convert ES6 features to ES5.
+- [Part1](./ES6-ES5/README.md): Convert ES6 features to ES5.
+- [Part2](./ES5-ES6/README.md) : Convert ES5 features to ES6.
 
 A completed solution is saved in the solutions directory of the repository, but try to work it out yourself first – it's not a race, and you shouldn't worry if you don't manage to complete everything.
